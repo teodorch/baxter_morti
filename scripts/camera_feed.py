@@ -18,17 +18,20 @@ def republish(msg):
         """             
         cv2_img = bridge.imgmsg_to_cv2(msg, "bgr8")
         match(cv2_img, i)
-
-        display_pub.publish(msg)
+        cv2.imshow("camera feed", cv2_img)
+        #display_pub.publish(msg)
+        
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
     
 
 
 def main():
     rospy.init_node("my_cam")
-    right_hand_camera = baxter_interface.CameraController("left_hand_camera")
-    right_hand_camera.resolution =(640,400)
+    right_hand_camera = baxter_interface.CameraController("right_hand_camera")
+    right_hand_camera.resolution = (640,400)
     right_hand_camera.open()
-    camera_name = "left_hand_camera"
+    camera_name = "right_hand_camera"
     sub = rospy.Subscriber('/cameras/' + camera_name + "/image", Image, republish, None, 1)
     rospy.spin()
 

@@ -165,7 +165,7 @@ def match(img2_color, i):
                 good.append(m)
                 
         thresh = len(kp1) * 20 / 100
-        print thresh, len(good)
+        #print thresh, len(good)
         
         if len(good)>MIN_MATCH_COUNT:
             src_pts = np.float32([ kp1[m.queryIdx].pt for m in good ])
@@ -182,9 +182,9 @@ def match(img2_color, i):
             
             cv2.polylines(img2_color,[np.int32(dst)],True,255,3)
             print "Matched key points ", len(good)
-            if (len(good) < thresh and len(os.listdir(path)) < 50):
-                cv2.imwrite(path + "train_%03d.jpg" % i[0], warp)
-                i[0] += 1 
-                print i
+            #if (len(good) < thresh and len(os.listdir(path)) < 50):
+            #    cv2.imwrite(path + "train_%03d.jpg" % i[0], warp)
+            #    i[0] += 1 
+            #    print i
             break;
 

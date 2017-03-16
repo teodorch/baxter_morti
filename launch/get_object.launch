@@ -29,7 +29,7 @@
   
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="log" />
   
-  <node name="move_group_python_interface_tutorial" pkg="baxter_morti" type="moveit_example.py" output="screen">
+  <node name="get_object" pkg="baxter_morti" type="get_object.py" output="screen" required="true">
     <remap from="/joint_states" to="/robot/joint_states" />
   </node>
   

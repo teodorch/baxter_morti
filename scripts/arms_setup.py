@@ -57,7 +57,8 @@ class ArmMovement(object):
         else:
             rospy.logerr("No Joint Angles provided for move_to_joint_positions. Staying put.")
 
-
+def setup():
+    main()
 
 def main():
     rospy.init_node("arm_movement")
@@ -67,19 +68,21 @@ def main():
         # Starting Joint angles for left arm
     starting_joint_angles = {'left_w0': 0.6718835850938112,
                              'left_w1': 1.031985575049912,
-                             'left_w2': 2.2192867048732223,
+                             'left_w2': -0.476301034638421,
                              'left_e0': -1.189968899785275,
                              'left_e1': 1.9400238130755056,
                              'left_s0': -0.08000397926829805,
                              'left_s1': -0.9999781166910306}
     
-    starting_joint_angles2 = {'right_w0': -0.6339175605936472,
-                             'right_w1': 1.0369710126105396,
-                             'right_w2':  0.4628787027444236,
-                             'right_e0': 1.1815487018687398,
-                             'right_e1': 1.8649371428716917,
-                             'right_s0': 0.08283496254581234,
-                             'right_s1': -0.9349612902161597}
+    starting_joint_angles2 = {'right_w0': -0.668432128321069,
+                             'right_w1': 1.0316020798529408,
+                             'right_w2':  0.49777676566881673,
+                             'right_e0': 1.1873011298233103,
+                             'right_e1': 1.9385682206901915,
+                             'right_s0': 0.08015049616701286,
+                             'right_s1': -0.9974710073224903}
+                             
+                
     arm_left = ArmMovement(limb1, hover_distance)
     
     arm_right = ArmMovement(limb2, hover_distance)
@@ -109,18 +112,6 @@ def main():
         
     arm_left.move_to_start(starting_joint_angles)
     arm_right.move_to_start(starting_joint_angles2)
-    rospy.sleep(2)
-    
-    #first_position = {'left_w0': 0.8456069093218344,
-    #                        'left_w1': 1.652480803749562,
-    #                         'left_w2': 0.026077673394052033,
-    #                         'left_e0': -0.8571117652309749,
-    #                         'left_e1': 0.30756314797102546,
-    #                         'left_s0': -0.826815644670238,
-    #                         'left_s1': -0.30986411915285356}
-                             
-                
-    #arm.move_to_start(first_position)
     
     return 0
 

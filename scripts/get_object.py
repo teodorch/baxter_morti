@@ -77,8 +77,8 @@ def move_group_python_interface_tutorial():
   group2.set_start_state_to_current_state();
   plan_right = group2.plan()
   
-  group2.go(plan_right, wait=True)
-  ss.screenshot_right("right")
+  #group2.go(plan_right, wait=True)
+  #ss.screenshot_right("right")
 
   print "============ After group.go..."
   print group2.get_current_pose()    
@@ -98,8 +98,8 @@ def move_group_python_interface_tutorial():
   plan2 = group.plan()
   
   
-  #group.go(plan2, wait=True)
-  #ss.screenshot_left("left_1")
+  group.go(plan2, wait=True)
+  ss.screenshot_left("left_1")
   print "============ After group.go..."
   print group.get_current_pose() 
   

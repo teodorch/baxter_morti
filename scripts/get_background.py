@@ -103,6 +103,23 @@ def main():
     
     image_topic = "/cameras/left_hand_camera/image"
     get_background(image_topic, "/home/teodor/ros_ws/src/baxter_morti/images/backgrounds/left_2/")
+    
+    pose_target.orientation.x = 0.0756030883698
+    pose_target.orientation.y = 0.846973156725
+    pose_target.orientation.z = 0.0483242020131
+    pose_target.orientation.w = 0.524008984957
+    pose_target.position.x = 0.802510985464
+    pose_target.position.y = 0.0763729576788
+    pose_target.position.z = -0.00833527975835
+
+
+    group.set_pose_target(pose_target)
+    plan_left_3 = group.plan()
+    group.go(plan_left_3, wait=True)
+    image_topic = "/cameras/left_hand_camera/image"
+    get_background(image_topic, "/home/teodor/ros_ws/src/baxter_morti/images/backgrounds/left_3/")
+  
+
 
 
 if __name__ == '__main__':

@@ -12,7 +12,8 @@ import numpy as np
 
 import take_screenshot as ss
 
-from std_msgs.msg import String
+from std_msgs.msg import String 
+import arms_setup as arms
 
 def move_group_python_interface_tutorial():
   ## First initialize moveit_commander and rospy.
@@ -60,7 +61,7 @@ def move_group_python_interface_tutorial():
   ## end-effector
   print "============ Generating plan right"
   pose_target = geometry_msgs.msg.Pose()  
-  print group2.get_current_pose()
+  #print group2.get_current_pose()
 
   
   pose_target.orientation.x = 0.236456535828
@@ -96,12 +97,9 @@ def move_group_python_interface_tutorial():
   group.set_start_state_to_current_state();
   plan2 = group.plan()
   
-  if not plan2.joint_trajectory.header.frame_id:
-    print("ERROR: No solution plan2")
-
-  print "============ Before group.go..."
-  group.go(plan2, wait=True)
-  ss.screenshot_left("left_1")
+  
+  #group.go(plan2, wait=True)
+  #ss.screenshot_left("left_1")
   print "============ After group.go..."
   print group.get_current_pose() 
   
@@ -119,12 +117,31 @@ def move_group_python_interface_tutorial():
   plan_left = group.plan()
 
   print "============ Before group.go..."
-  group.go(plan_left, wait=True)
-  ss.screenshot_left("left_2")
+  #group.go(plan_left, wait=True)
+  #ss.screenshot_left("left_2")
   print "============ After group.go..."
   print group.get_current_pose() 
-  ## When finished shut down moveit_commander.
+  
+  pose_target.orientation.x = 0.0756030883698
+  pose_target.orientation.y = 0.846973156725
+  pose_target.orientation.z = 0.0483242020131
+  pose_target.orientation.w = 0.524008984957
+  pose_target.position.x = 0.802510985464
+  pose_target.position.y = 0.0763729576788
+  pose_target.position.z = -0.00833527975835
 
+
+  group.set_pose_target(pose_target)
+  plan2 = group.plan()
+  
+  if not plan2.joint_trajectory.header.frame_id:
+    print("ERROR: No solution plan2")
+
+  print "============ Before group.go..."
+  #group.go(plan2, wait=True)
+  #ss.screenshot_left("left_3")
+  ## When finished shut down moveit_commander.
+  #arms.setup()
   moveit_commander.roscpp_shutdown()
 
   ## END_TUTORIAL

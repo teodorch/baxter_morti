@@ -77,8 +77,8 @@ def move_group_python_interface_tutorial():
   group2.set_start_state_to_current_state();
   plan_right = group2.plan()
   
-  #group2.go(plan_right, wait=True)
-  #ss.screenshot_right("right")
+  group2.go(plan_right, wait=True)
+  ss.screenshot_right("right")
 
   print "============ After group.go..."
   print group2.get_current_pose()    
@@ -117,8 +117,8 @@ def move_group_python_interface_tutorial():
   plan_left = group.plan()
 
   print "============ Before group.go..."
-  #group.go(plan_left, wait=True)
-  #ss.screenshot_left("left_2")
+  group.go(plan_left, wait=True)
+  ss.screenshot_left("left_2")
   print "============ After group.go..."
   print group.get_current_pose() 
   
@@ -138,8 +138,8 @@ def move_group_python_interface_tutorial():
     print("ERROR: No solution plan2")
 
   print "============ Before group.go..."
-  #group.go(plan2, wait=True)
-  #ss.screenshot_left("left_3")
+  group.go(plan2, wait=True)
+  ss.screenshot_left("left_3")
   ## When finished shut down moveit_commander.
   #arms.setup()
   moveit_commander.roscpp_shutdown()

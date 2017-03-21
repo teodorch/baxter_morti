@@ -4,8 +4,6 @@ from matplotlib import pyplot as plt
 
 import os, os.path
 
-MIN_MATCH_COUNT = 25
-
 def order_points(pts):
 	# initialzie a list of coordinates that will be ordered
 	# such that the first entry in the list is the top-left,
@@ -133,14 +131,12 @@ def drawMatches(img1, kp1, img2, kp2, matches):
     return out
     
 def match(img2_color):
-
-    #img1 = cv2.imread('right.jpg',0)          # queryImage
-    #img2 = cv2.imread('./data/box2.jpg',0) # trainImage
+    
+    cwd = os.getcwd()
     img2 = cv2.cvtColor(img2_color, cv2.COLOR_BGR2GRAY)
-    #img2_color = cv2.imread('./data/box2.jpg')
     # Initiate SURF detector
     surf = cv2.SURF()
-    path = "/home/teodor/ros_ws/src/baxter_morti/images/train_data/"
+    path = cwd + "/ros_ws/src/baxter_morti/images/train_data/"
     rect = np.zeros((4, 2), dtype = "float32")
     
     kp2, des2 = surf.detectAndCompute(img2,None)
@@ -164,9 +160,10 @@ def match(img2_color):
             if m.distance < 0.8*n.distance:
                 good.append(m)
                 
-        thresh = len(kp1) * 25 / 100
+        thresh = len(kp1) * 20 / 100
+        min_match = len(kp1) * 15 / 100
         
-        if len(good)>MIN_MATCH_COUNT:
+        if len(good)>min_match:
             src_pts = np.float32([ kp1[m.queryIdx].pt for m in good ])
             dst_pts = np.float32([ kp2[m.trainIdx].pt for m in good ])
 
@@ -180,12 +177,11 @@ def match(img2_color):
             warp = get_warped(img2_color, dst, rect)
             
             cv2.polylines(img2_color,[np.int32(dst)],True,255,3)
-            print "Matched key points ", len(good), len(kp1), name, thresh
-            if (len(good) < thresh and len(os.listdir(path)) < 10):
+            print "Matched key points ", len(good), len(kp1), min_match, thresh
+            if (len(good) < thresh and len(os.listdir(path)) < 50):
                 i = len(os.listdir(path))
                 print "Saving image"
                 cv2.imwrite(path + "train_%03d.jpg" % i, warp)
                 cv2.imwrite(path + "/home/teodor/ros_ws/src/baxter_morti/images/frames/frame_%03d.jpg" % i, img2_color)
-            #    print i
             break;
 

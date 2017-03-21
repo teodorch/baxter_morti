@@ -17,12 +17,11 @@ def republish(msg):
             Sends the camera image to baxter's display
         """             
         cv2_img = bridge.imgmsg_to_cv2(msg, "bgr8")
-        match(cv2_img, i)
+        match(cv2_img)
         cv2.imshow("camera feed", cv2_img)
         #display_pub.publish(msg)
         
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        cv2.waitKey(1)
     
 
 

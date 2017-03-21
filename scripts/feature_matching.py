@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 
 import os, os.path
 
-MIN_MATCH_COUNT = 20
+MIN_MATCH_COUNT = 25
 
 def order_points(pts):
 	# initialzie a list of coordinates that will be ordered
@@ -132,7 +132,7 @@ def drawMatches(img1, kp1, img2, kp2, matches):
     # Also return the image if you'd like a copy
     return out
     
-def match(img2_color, i):
+def match(img2_color):
 
     #img1 = cv2.imread('right.jpg',0)          # queryImage
     #img2 = cv2.imread('./data/box2.jpg',0) # trainImage
@@ -161,11 +161,10 @@ def match(img2_color, i):
         # store all the good matches as per Lowe's ratio test.
         good = []
         for m,n in matches:
-            if m.distance < 0.7*n.distance:
+            if m.distance < 0.8*n.distance:
                 good.append(m)
                 
-        thresh = len(kp1) * 20 / 100
-        #print thresh, len(good)
+        thresh = len(kp1) * 25 / 100
         
         if len(good)>MIN_MATCH_COUNT:
             src_pts = np.float32([ kp1[m.queryIdx].pt for m in good ])
@@ -181,10 +180,12 @@ def match(img2_color, i):
             warp = get_warped(img2_color, dst, rect)
             
             cv2.polylines(img2_color,[np.int32(dst)],True,255,3)
-            print "Matched key points ", len(good)
-            #if (len(good) < thresh and len(os.listdir(path)) < 50):
-            #    cv2.imwrite(path + "train_%03d.jpg" % i[0], warp)
-            #    i[0] += 1 
+            print "Matched key points ", len(good), len(kp1), name, thresh
+            if (len(good) < thresh and len(os.listdir(path)) < 10):
+                i = len(os.listdir(path))
+                print "Saving image"
+                cv2.imwrite(path + "train_%03d.jpg" % i, warp)
+                cv2.imwrite(path + "/home/teodor/ros_ws/src/baxter_morti/images/frames/frame_%03d.jpg" % i, img2_color)
             #    print i
             break;
 

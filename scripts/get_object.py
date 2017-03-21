@@ -64,27 +64,20 @@ def move_group_python_interface_tutorial():
   print group2.get_current_pose()
 
   
-  #pose_target.orientation.x = 0.236456535828
-  #pose_target.orientation.y = 0.820423215731
-  #pose_target.orientation.z = 0.515155768566
-  #pose_target.orientation.w = 0.0748905058489
-  #pose_target.position.x = 0.82703028839
-  #pose_target.position.y = -0.19754152288
-  #pose_target.position.z = 0.0727368002211
-  
-  pose_target.orientation.x = -0.141390359735
-  pose_target.orientation.y = 0.9896549425
-  pose_target.orientation.z = -0.0102750595181
-  pose_target.orientation.w = 0.022051850506
-  pose_target.position.x = 0.573504461763
-  pose_target.position.y = -0.183134330609
-  pose_target.position.z = 0.258542784673
+  pose_target.orientation.x = 0.236456535828
+  pose_target.orientation.y = 0.820423215731
+  pose_target.orientation.z = 0.515155768566
+  pose_target.orientation.w = 0.0748905058489
+  pose_target.position.x = 0.82703028839
+  pose_target.position.y = -0.19754152288
+  pose_target.position.z = 0.0727368002211
+ 
   
   group2.set_pose_target(pose_target)
   group2.set_start_state_to_current_state();
   plan_right = group2.plan()
   
-  #group2.go(plan_right, wait=True)
+  group2.go(plan_right, wait=True)
   ss.screenshot_right("right")
 
   print "============ After group.go..."
@@ -97,15 +90,7 @@ def move_group_python_interface_tutorial():
   pose_target.orientation.w = 0.0273043602521
   pose_target.position.x = 0.866593664014
   pose_target.position.y = 0.093401659553
-  pose_target.position.z = 0.114774653079
-  
-  #pose_target.orientation.x = 0.152355310615
-  #pose_target.orientation.y = 0.987990984252
-  #pose_target.orientation.z = 0.00827601925025
-  #pose_target.orientation.w = 0.0243553252641
-  #pose_target.position.x = 0.57916775393
-  #pose_target.position.y = 0.1790717524
-  #pose_target.position.z = 0.102284334459
+  pose_target.position.z = 0.054774653079
 
   group.set_pose_target(pose_target)
   group.set_start_state_to_current_state();
@@ -152,7 +137,7 @@ def move_group_python_interface_tutorial():
     print("ERROR: No solution plan2")
 
   print "============ Before group.go..."
-  #group.go(plan2, wait=True)
+  group.go(plan2, wait=True)
   ss.screenshot_left("left_3")
   ## When finished shut down moveit_commander.
   #arms.setup()

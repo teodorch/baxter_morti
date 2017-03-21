@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import numpy as np
 import cv2
 import sys
@@ -14,17 +15,17 @@ import sys
 
 def substract_background(backgroundSubtractor, name):
     for i in range(0, 10):
-        bgImageFile = "data/backgrounds/" + name + "/frame%04d.jpeg" % i
+        bgImageFile = "/home/teodor/ros_ws/src/baxter_morti/images/backgrounds/" + name + "/frame%04d.jpeg" % i
         print "Opening background", bgImageFile
         bg = cv2.imread(bgImageFile)
-        backgroundSubtractor.apply(bg, learningRate=0.5)
+        backgroundSubtractor.apply(bg, learningRate=0.1)
 
 # apply the algorithm for detection image using learning rate 0
-    image = cv2.imread("data/" + name + ".jpg")
+    image = cv2.imread("/home/teodor/ros_ws/src/baxter_morti/images/data/" + name + ".jpg")
     fgmask = backgroundSubtractor.apply(image, learningRate=0)
 
 
-
+    print name
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     blurred = cv2.GaussianBlur(fgmask, (3, 3), 0)
@@ -69,6 +70,7 @@ def main():
     backgroundSubtractor = cv2.BackgroundSubtractorMOG(history=100, nmixtures=5, backgroundRatio=0.7, noiseSigma=0)
     substract_background(backgroundSubtractor, "left_1")
     substract_background(backgroundSubtractor, "left_2")
+    substract_background(backgroundSubtractor, "left_3")
     substract_background(backgroundSubtractor, "right")
 
 

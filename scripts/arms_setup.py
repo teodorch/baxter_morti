@@ -85,29 +85,7 @@ def main():
                 
     arm_left = ArmMovement(limb1, hover_distance)
     
-    arm_right = ArmMovement(limb2, hover_distance)
-    
-        # An orientation for gripper fingers to be overhead and parallel to the obj
-    overhead_orientation = Quaternion(
-                             x=-0.0249590815779,
-                             y=0.999649402929,
-                             z=0.00737916180073,
-                             w=0.00486450832011)
-    block_poses = list()
-
-        # The Pose of the block in its initial location.
-        # You may wish to replace these poses with estimates
-        # from a perception node.
-    block_poses.append(Pose(
-        position=Point(x=0.7, y=0.15, z=-0.129),
-        orientation=overhead_orientation))
-        # Feel free to add additional desired poses for the object.
-        # Each additional pose will get its own pick and place.
-    block_poses.append(Pose(
-        position=Point(x=0.75, y=0.0, z=-0.129),
-        orientation=overhead_orientation))
-        # Move to the desired starting angles
-        
+    arm_right = ArmMovement(limb2, hover_distance)    
         
         
     arm_left.move_to_start(starting_joint_angles)

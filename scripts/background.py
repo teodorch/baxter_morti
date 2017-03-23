@@ -2,16 +2,6 @@ import numpy as np
 import cv2
 import sys
 
-
-# both MOG and MOG2 can be used, with different parameter values
-#backgroundSubtractor = cv2.BackgroundSubtractorMOG(3, 4, 0.8);
-#backgroundSubtractor = cv2.BackgroundSubtractorMOG()
-
-#backgroundSubtractor = cv2.BackgroundSubtractorMOG2(history=500, varThreshold=500)
-#backgroundSubtractor = cv2.BackgroundSubtractorMOG2()
-
-# apply the algorithm for background images using learning rate > 0
-
 def substract_background(backgroundSubtractor, name):
     for i in range(0, 10):
         bgImageFile = "data/backgrounds/" + name + "/frame%04d.jpeg" % i
@@ -54,9 +44,6 @@ def substract_background(backgroundSubtractor, name):
        
 
     cv2.grabCut(image, mask, rect, bgdModel, fgdModel, 5, cv2.GC_INIT_WITH_RECT)
-
-    #mask2 = np.where((mask==2)|(mask==0),0,1).astype('uint8')
-    #image = image*mask2[:,:,np.newaxis]
 
     cropped = image[y:y+h, x:x+w]
     cv2.imwrite(name +'_cropped.jpg',cropped)

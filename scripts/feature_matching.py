@@ -3,29 +3,6 @@ import cv2
 from matplotlib import pyplot as plt
 
 import os, os.path
-
-MIN_MATCH_COUNT = 25
-
-def order_points(pts):
-	# initialzie a list of coordinates that will be ordered
-	# such that the first entry in the list is the top-left,
-	# the second entry is the top-right, the third is the
-	# bottom-right, and the fourth is the bottom-left
-	rect = np.zeros((4, 2), dtype = "float32")
-	# the top-left point will have the smallest sum, whereas
-	# the bottom-right point will have the largest sum
-	s = pts.sum(axis = 1)
-	rect[0] = pts[np.argmin(s)]
-	rect[2] = pts[np.argmax(s)]
- 
-	# now, compute the difference between the points, the
-	# top-right point will have the smallest difference,
-	# whereas the bottom-left will have the largest difference
-	diff = np.diff(pts, axis = 1)
-	rect[1] = pts[np.argmin(diff)]
-	rect[3] = pts[np.argmax(diff)]
-	# return the ordered coordinates
-	return rect
 	
 def get_warped(image, pts, rect):
 
@@ -38,7 +15,6 @@ def get_warped(image, pts, rect):
     widthA = np.sqrt(((br[0] - bl[0]) ** 2) + ((br[1] - bl[1]) ** 2))
     widthB = np.sqrt(((tr[0] - tl[0]) ** 2) + ((tr[1] - tl[1]) ** 2))
      
-    # ...and now for the height of our new image
     heightA = np.sqrt(((tr[0] - br[0]) ** 2) + ((tr[1] - br[1]) ** 2))
     heightB = np.sqrt(((tl[0] - bl[0]) ** 2) + ((tl[1] - bl[1]) ** 2))
      
@@ -51,9 +27,7 @@ def get_warped(image, pts, rect):
     rect[1] = tr
     rect[2] = br
     rect[3] = bl
-    #rect = order_points(rect)
-    #x, y, w, h = cv2.boundingRect(dst)
-    #y = 0
+
     dst2 = np.array([[0, 0],[maxWidth - 1, 0],	[maxWidth - 1, maxHeight - 1],	[0, maxHeight - 1]], dtype = "float32")
     
     M = cv2.getPerspectiveTransform(rect, dst2)
@@ -62,9 +36,7 @@ def get_warped(image, pts, rect):
 
 def drawMatches(img1, kp1, img2, kp2, matches):
     """
-    My own implementation of cv2.drawMatches as OpenCV 2.4.9
-    does not have this function available but it's supported in
-    OpenCV 3.0.0
+    Shamelessly stolen from stackoverfow
 
     This function takes in two images with their associated 
     keypoints, as well as a list of DMatch data structure (matches) 
@@ -134,11 +106,8 @@ def drawMatches(img1, kp1, img2, kp2, matches):
     
 def match(img2_color):
 
-    #img1 = cv2.imread('right.jpg',0)          # queryImage
-    #img2 = cv2.imread('./data/box2.jpg',0) # trainImage
     img2 = cv2.cvtColor(img2_color, cv2.COLOR_BGR2GRAY)
-    #img2_color = cv2.imread('./data/box2.jpg')
-    # Initiate SURF detector
+
     surf = cv2.SURF()
     path = "/home/teodor/ros_ws/src/baxter_morti/images/train_data/"
     rect = np.zeros((4, 2), dtype = "float32")
@@ -161,12 +130,14 @@ def match(img2_color):
         # store all the good matches as per Lowe's ratio test.
         good = []
         for m,n in matches:
-            if m.distance < 0.8*n.distance:
+            if m.distance < 0.7*n.distance:
                 good.append(m)
                 
-        thresh = len(kp1) * 25 / 100
-        
-        if len(good)>MIN_MATCH_COUNT:
+        thresh = len(kp1) * 20 / 100
+        min_match = len(kp1) * 10 / 100
+
+
+        if len(good)>min_match:
             src_pts = np.float32([ kp1[m.queryIdx].pt for m in good ])
             dst_pts = np.float32([ kp2[m.trainIdx].pt for m in good ])
 
@@ -186,6 +157,5 @@ def match(img2_color):
                 print "Saving image"
                 cv2.imwrite(path + "train_%03d.jpg" % i, warp)
                 cv2.imwrite(path + "/home/teodor/ros_ws/src/baxter_morti/images/frames/frame_%03d.jpg" % i, img2_color)
-            #    print i
             break;
 

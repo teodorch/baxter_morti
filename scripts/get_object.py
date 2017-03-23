@@ -15,7 +15,7 @@ import take_screenshot as ss
 from std_msgs.msg import String 
 import arms_setup as arms
 
-def move_group_python_interface_tutorial():
+def move_group_arm_movement():
   ## First initialize moveit_commander and rospy.
   print "============ Starting tutorial setup"
   moveit_commander.roscpp_initialize(sys.argv)
@@ -150,6 +150,6 @@ def move_group_python_interface_tutorial():
 
 if __name__=='__main__':
   try:
-    sys.exit(move_group_python_interface_tutorial())
+    sys.exit(move_group_arm_movement())
   except rospy.ROSInterruptException:
     pass

@@ -39,8 +39,8 @@ def image_callback(msg, name):
     except CvBridgeError, e:
         print(e)
     else:
-        # Save your OpenCV2 image as a jpeg 
-        cv2.imwrite(name + '.jpeg', cv2_img)
+        # Save your OpenCV2 image as a jpg 
+        cv2.imwrite(name + '.jpg', cv2_img)
 
 def main():
     arms.setup()
@@ -69,7 +69,7 @@ def main():
     group2.go(plan_right, wait=True)
     
     image_topic = "/cameras/right_hand_camera/image"
-    get_background(image_topic, "/home/teodor/ros_ws/src/baxter_morti/images/backgrounds/right/")
+    get_background(image_topic, "../ros_ws/src/baxter_morti/images/backgrounds/right/")
 
         
     pose_target.orientation.x = 0.149708761075
@@ -86,7 +86,7 @@ def main():
     group.go(plan_left_1, wait=True)
     
     image_topic = "/cameras/left_hand_camera/image"
-    get_background(image_topic, "/home/teodor/ros_ws/src/baxter_morti/images/backgrounds/left_1/")
+    get_background(image_topic, "../ros_ws/src/baxter_morti/images/backgrounds/left_1/")
     
     pose_target.orientation.x = 0.237811083067
     pose_target.orientation.y = 0.876081535264
@@ -102,7 +102,7 @@ def main():
     group.go(plan_left_2, wait=True)
     
     image_topic = "/cameras/left_hand_camera/image"
-    get_background(image_topic, "/home/teodor/ros_ws/src/baxter_morti/images/backgrounds/left_2/")
+    get_background(image_topic, "../ros_ws/src/baxter_morti/images/backgrounds/left_2/")
     
     pose_target.orientation.x = 0.0756030883698
     pose_target.orientation.y = 0.846973156725
@@ -117,7 +117,7 @@ def main():
     plan_left_3 = group.plan()
     group.go(plan_left_3, wait=True)
     image_topic = "/cameras/left_hand_camera/image"
-    get_background(image_topic, "/home/teodor/ros_ws/src/baxter_morti/images/backgrounds/left_3/")
+    get_background(image_topic, "../ros_ws/src/baxter_morti/images/backgrounds/left_3/")
   
 
 

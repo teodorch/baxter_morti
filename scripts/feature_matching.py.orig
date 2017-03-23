@@ -3,7 +3,8 @@ import cv2
 from matplotlib import pyplot as plt
 
 import os, os.path
-	
+<<<<<<< HEAD
+=======
 
 def order_points(pts):
 	# initialzie a list of coordinates that will be ordered
@@ -25,6 +26,7 @@ def order_points(pts):
 	rect[3] = pts[np.argmax(diff)]
 	# return the ordered coordinates
 	return rect
+>>>>>>> 319604bd7358d3054943b167586b858a4c49fdf8
 	
 def get_warped(image, pts, rect):
 
@@ -127,10 +129,16 @@ def drawMatches(img1, kp1, img2, kp2, matches):
     return out
     
 def match(img2_color):
+<<<<<<< HEAD
+
+    img2 = cv2.cvtColor(img2_color, cv2.COLOR_BGR2GRAY)
+
+=======
     
     cwd = os.getcwd()
     img2 = cv2.cvtColor(img2_color, cv2.COLOR_BGR2GRAY)
     # Initiate SURF detector
+>>>>>>> 319604bd7358d3054943b167586b858a4c49fdf8
     surf = cv2.SURF()
     path = cwd + "/ros_ws/src/baxter_morti/images/train_data/"
     rect = np.zeros((4, 2), dtype = "float32")
@@ -157,8 +165,14 @@ def match(img2_color):
                 good.append(m)
                 
         thresh = len(kp1) * 20 / 100
+<<<<<<< HEAD
+        min_match = len(kp1) * 10 / 100
+
+
+=======
         min_match = len(kp1) * 15 / 100
         
+>>>>>>> 319604bd7358d3054943b167586b858a4c49fdf8
         if len(good)>min_match:
             src_pts = np.float32([ kp1[m.queryIdx].pt for m in good ])
             dst_pts = np.float32([ kp2[m.trainIdx].pt for m in good ])

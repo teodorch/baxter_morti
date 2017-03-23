@@ -2,7 +2,7 @@
 import numpy as np
 import cv2
 import sys
-
+import os
 
 # both MOG and MOG2 can be used, with different parameter values
 #backgroundSubtractor = cv2.BackgroundSubtractorMOG(3, 4, 0.8);
@@ -14,18 +14,20 @@ import sys
 # apply the algorithm for background images using learning rate > 0
 
 def substract_background(backgroundSubtractor, name):
+    cwd = os.getcwd()
     for i in range(0, 10):
-        bgImageFile = "/home/teodor/ros_ws/src/baxter_morti/images/backgrounds/" + name + "/frame%04d.jpeg" % i
+        bgImageFile =cwd + "/ros_ws/src/baxter_morti/images/backgrounds/" + name + "/frame%04d.jpg" % i
         print "Opening background", bgImageFile
         bg = cv2.imread(bgImageFile)
+        cv2.imshow("asd", bg)
         backgroundSubtractor.apply(bg, learningRate=0.1)
 
 # apply the algorithm for detection image using learning rate 0
-    image = cv2.imread("/home/teodor/ros_ws/src/baxter_morti/images/data/" + name + ".jpg")
+    image = cv2.imread(cwd + "/ros_ws/src/baxter_morti/images/data/" + name + ".jpg")
     fgmask = backgroundSubtractor.apply(image, learningRate=0)
-
-
-    print name
+    cv2.imshow("image", fgmask)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     blurred = cv2.GaussianBlur(fgmask, (3, 3), 0)
@@ -55,9 +57,6 @@ def substract_background(backgroundSubtractor, name):
        
 
     cv2.grabCut(image, mask, rect, bgdModel, fgdModel, 5, cv2.GC_INIT_WITH_RECT)
-
-    #mask2 = np.where((mask==2)|(mask==0),0,1).astype('uint8')
-    #image = image*mask2[:,:,np.newaxis]
 
     cropped = image[y:y+h, x:x+w]
     cv2.imwrite(name +'_cropped.jpg',cropped)

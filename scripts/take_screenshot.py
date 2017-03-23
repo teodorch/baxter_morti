@@ -29,7 +29,7 @@ def image_callback(msg, name):
         print(e)
     else:
         # Save your OpenCV2 image as a jpeg 
-        cv2.imwrite("/home/teodor/ros_ws/src/baxter_morti/images/data/" + name + ".jpg", cv2_img)
+        cv2.imwrite("../ros_ws/src/baxter_morti/images/data/" + name + ".jpg", cv2_img)
 
 def screenshot_left(name):
     # Define your image topic
